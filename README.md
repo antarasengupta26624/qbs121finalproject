@@ -62,6 +62,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 4. Data Cleaning & Filtering 
 - Removed responses coded as ‘Refuse’ and ‘Don’t Know’ in categorical variables.
+  
 	- Education Level (7, 9)
    
 	- Marital Status (77, 99)
