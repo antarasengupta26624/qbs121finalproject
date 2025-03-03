@@ -95,6 +95,26 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 <iframe src="assets/ggpairs_plot.html" width=800 height=600 frameBorder=0></iframe>
 
+### C. **Linear Mixed-Effects Model (LMM) with PSU as a Random Effect**
+This model showcases how socioeconomic and demographic factors impact PHQ-9 scores, while accounting for PSU (Primary Sampling Unit) clustering. 
+
+1. Why this model?
+- Survey data is clustered within PSUs.
+- LMM accounts for PSU variability, improving overall model accuracy. 
+
+2. Model Summary
+lmer(PHQ9_TOTAL ~ Gender_Code +  Age_Years + Education_Level + Marital_Status + Income_Level_as_Poverty_Ratio + (1 | SDMVPSU), data = nhanes_cleaned, REML = FALSE)
+- Random effect (PSU variance): 0.00385 -  minimal clustering impact. 
+- Residual variance: 20.59 - most variation is individual level
+
+3. Results:
+- Gender (Female): Females have higher PHQ-9 scores.
+- Age: Older age is linked to lower PHQ-9 scores.
+- Education: Higher education lowers PHQ-9 scores.
+- Marital status: Being married increases PHQ-9 scores.
+- Income Level: Higher income lowers PHQ-9 scores. 
+
+
 ## IV. Conclusion
 
 
