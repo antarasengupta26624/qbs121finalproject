@@ -51,17 +51,14 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 - Imported ‘depression questionnaire’ and ‘demographics’ datasets using read_xpt().
 - Merged both datasets by the unique identifier ‘SEQN’.
-  
 2. Handling Missing Data
    
 - Removed ‘RIDAGEMN’ variable since it contained only NA values.
 - Applied Multiple Imputation by Chained Equations (MICE) using predictive mean matching (pmm) to handle missing values.
 - Extracted five imputed datasets and selected the first one (nhanes_imputed.1) for all future analyses.
-
 3. Variables Renaming for Readability
    
 - Renamed key variables for clarity.
-
 4. Data Cleaning & Filtering
    
 - Removed responses coded as ‘Refuse’ and ‘Don’t Know’ in categorical variables.
@@ -76,9 +73,6 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
   
 - Kept data consistency by applying similar filtering across other variables.
-  
-
-
 5. Creating the PHQ-9 Depression Score
    
 - Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
@@ -92,11 +86,9 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Demographics: Race/Ethnicity, Gender, Age, Birthplace, Military Service Status
 - SES Factors: Education Level, Marital Status, Household Size, Income Level
 - Depression Indicator: PHQ-9 Total Score 
-
 2. Computing Pearson Correlation Matrix
    
 - Extracted correlation values specifically for the PHQ-9 score.
-
 3. Results:
    
 - Highest Negative Correlations:
@@ -107,9 +99,6 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Highest Positive Correlations:
 	- Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
 	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
-
-
-
 4. Conclusions:
    
 - Socioeconomic factors (income, education, age) seem more relevant to depression scores 
