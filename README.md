@@ -63,9 +63,13 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 4. Data Cleaning & Filtering 
 - Removed responses coded as ‘Refuse’ and ‘Don’t Know’ in categorical variables.
 	- Education Level (7, 9)
+   
 	- Marital Status (77, 99)
+   
   	- Birthplace Code (77, 99)
-  	- Military Service Status (7, 9) 
+  	  
+  	- Military Service Status (7, 9)
+  
 - Kept data consistency by applying similar filtering across other variables.
 
 5. Creating the PHQ-9 Depression Score
