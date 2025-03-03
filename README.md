@@ -53,14 +53,17 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Merged both datasets by the unique identifier ‘SEQN’.
   
 2. Handling Missing Data
+   
 - Removed ‘RIDAGEMN’ variable since it contained only NA values.
 - Applied Multiple Imputation by Chained Equations (MICE) using predictive mean matching (pmm) to handle missing values.
 - Extracted five imputed datasets and selected the first one (nhanes_imputed.1) for all future analyses.
 
 3. Variables Renaming for Readability
+   
 - Renamed key variables for clarity.
 
-4. Data Cleaning & Filtering 
+4. Data Cleaning & Filtering
+   
 - Removed responses coded as ‘Refuse’ and ‘Don’t Know’ in categorical variables.
   
 	- Education Level (7, 9)
@@ -74,6 +77,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Kept data consistency by applying similar filtering across other variables.
   
 5. Creating the PHQ-9 Depression Score
+   
 - Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
 - Converted values 7 (refused) and 9 (missing) to NA.
 - Calculated PHQ-9 Total Score as the sum of all NA responses.
@@ -81,14 +85,16 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 ### B. **Pearson Correlation Matrix**
 1. Defining Key SES Indicators
+
 - Demographics: Race/Ethnicity, Gender, Age, Birthplace, Military Service Status
 - SES Factors: Education Level, Marital Status, Household Size, Income Level
 - Depression Indicator: PHQ-9 Total Score 
 
 2. Computing Pearson Correlation Matrix
+   
 - Extracted correlation values specifically for the PHQ-9 score.
 
-3. Interpretation:
+3. Results:
    
 - Highest Negative Correlations:
 	- Income Level (r = -0.196): Higher income is associated with lower PHQ-9 scores.
@@ -100,13 +106,8 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
 	- Military Service (r = 0.027): Very weak association with PHQ-9 scores. 
 
-- Other variables (weak or no correlation):
-	- Race/Ethnicity (r = 0.003)
-	- Exam Month (r = -0.013)
-	- Birthplace (r = -0.045)
-	- Household Size (r = 0.010) 
-
 4. Conclusions:
+   
 - Socioeconomic factors (income, education, age) seem more relevant to depression scores 
 - Marital status and gender show some association but are weaker 
 - Race, birthplace, and household size have negligible impact
