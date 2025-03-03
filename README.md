@@ -45,6 +45,37 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 <iframe src="assets/table1.html" width=800 height=600 frameBorder=0></iframe>
 
+### A. **Data Wrangling**
+
+1. Reading & Merging Data
+
+- Imported ‘depression questionnaire’ and ‘demographics’ datasets using read_xpt().
+- Merged both datasets by the unique identifier ‘SEQN’.
+  
+2. Handling Missing Data
+- Removed ‘RIDAGEMN’ variable since it contained only NA values.
+- Applied Multiple Imputation by Chained Equations (MICE) using predictive mean matching (pmm) to handle missing values.
+- Extracted five imputed datasets and selected the first one (nhanes_imputed.1) for all future analyses.
+
+3. Variables Renaming for Readability
+- Renamed key variables for clarity.
+
+4. Data Cleaning & Filtering 
+- Removed responses coded as ‘Refuse’ and ‘Don’t Know’ in categorical variables.
+	- Education Level (7, 9)
+	- Marital Status (77, 99)
+  	- Birthplace Code (77, 99)
+  	- Military Service Status (7, 9) 
+- Kept data consistency by applying similar filtering across other variables.
+
+5. Creating the PHQ-9 Depression Score
+- Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
+- Converted values 7 (refused) and 9 (missing) to NA.
+- Calculated PHQ-9 Total Score as the sum of all NA responses.
+
+
+### B. **Pearson Correlation Matrix**
+
 
 
 
