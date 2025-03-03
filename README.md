@@ -72,7 +72,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
   	- Military Service Status (7, 9)
   
 - Kept data consistency by applying similar filtering across other variables.
-
+  
 5. Creating the PHQ-9 Depression Score
 - Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
 - Converted values 7 (refused) and 9 (missing) to NA.
@@ -89,6 +89,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Extracted correlation values specifically for the PHQ-9 score.
 
 3. Interpretation:
+   
 - Highest Negative Correlations:
 	- Income Level (r = -0.196): Higher income is associated with lower PHQ-9 scores.
  	- Age (r = -0.170): Older individuals tend to have lower PHQ-9 scores. 
