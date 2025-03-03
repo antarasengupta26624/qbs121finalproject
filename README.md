@@ -19,7 +19,22 @@ IV. Conclusions \
 V. References \
 *All code can be found in Methods_final.pdf
 
+
+
+
+
+
 ## I. Introduction
+This dataset includes nationally representative, cross-sectional survey data conducted by CDC’s National Center for Health Statistics (NCHS). Specifically,  The National Health and Nutrition Examination Survey (NHANES) 2021-2023 data were used. It collects data on demographics, socioeconomic status (SES), dietary habits, health behaviors, and medical conditions – including mental health indicators. The NHANES is unique in that it is the only health survey that includes health exams, laboratory tests, and dietary interviews for participants of all ages in the United States. 
+
+Current socioeconomic disparities in depression are well-documented and multifaceted. Individuals with lower socioeconomic status (SES) are more likely to experience higher rates of depression and more severe depressive symptoms. This is influenced by factors such as income, education, employment status, and housing conditions. Current literature indicates that individuals in the lowest income quintile have a higher probability of experiencing symptoms of depression compared to those in the highest income quintile. Specifically, being in the richest income quintile is associated with a lower probability of experiencing symptoms of anxiety and depression (OR = 0.67, CI [0.64-0.70]).[1]   Additionally, lower educational attainment and unemployment are significant predictors of poorer depression outcomes. For instance, unemployed individuals have a 28% higher depressive symptom scale score compared to employed individuals. [2]
+
+Unfortunately but unsurprisingly, the COVID-19 pandemic has exacerbated these disparities. During the pandemic, adults with less than a high school education, those with incomes below $25,000, and renters had significantly higher odds of serious depression compared to their higher-SES counterparts.[3] Furthermore, socioeconomic inequalities in depression were found to persist or even increase during the pandemic, particularly affecting those with lower income and educational levels.[4]
+
+Moreover, socioeconomic factors also influence the utilization and perceived helpfulness of mental health treatments. Higher SES individuals are more likely to talk to a mental health professional and perceive the treatment as helpful.[1] However, disparities in treatment outcomes are evident, with lower SES individuals experiencing slower and less improvement in response to pharmacotherapy for major depression.[5]
+
+Therefore, there is strong theory suggesting that socioeconomic disparities in depression are significant and multifactorial, with lower SES associated with higher prevalence, greater severity, and poorer treatment outcomes for depression. Addressing these disparities requires firstly identification of the problem then procurement of targeted interventions that consider such broader socioeconomic determinants of mental health. Employing the NHANES sample will allow for a nationwide examination of mental health variation. The aim of the present study is to elucidate specific socioeconomic disparities in mental health; specifically, we will operationalize mental health problems with a depression scale and include highly correlated socioeconomic indicators in our modeling.
+
 
 
 
@@ -34,6 +49,15 @@ V. References \
 
 
 ## IV. Conclusion
+
+
+## V. References
+Henking C, Reeves A, Chrisinger B. Global inequalities in mental health problems: understanding the predictors of lifetime prevalence, treatment utilisation and perceived helpfulness across 111 countries. Prev Med. 2023;177:107769. doi:10.1016/j.ypmed.2023.107769
+Buckman JEJ, Saunders R, Stott J, et al. Socioeconomic Indicators of Treatment Prognosis for Adults With Depression: A Systematic Review and Individual Patient Data Meta-analysis. JAMA Psychiatry. 2022;79(5):406. doi:10.1001/jamapsychiatry.2022.0100
+Lee H, Singh GK. Monthly trends in self-reported health status and depression by race/ethnicity and socioeconomic status during the COVID-19 Pandemic, United States, April 2020 – May 2021. Ann Epidemiol. 2021;63:52-62. doi:10.1016/j.annepidem.2021.07.014
+Herrmann K, Beese F, Wollgast L, et al. Temporal dynamics of socioeconomic inequalities in depressive and anxiety symptoms during the COVID-19 pandemic: a scoping review. Front Public Health. 2024;12:1397392. doi:10.3389/fpubh.2024.1397392
+Mills JA, Suresh V, Chang L, et al. Socioeconomic Predictors of Treatment Outcomes Among Adults With Major Depressive Disorder. Psychiatr Serv. 2022;73(9):965-969. doi:10.1176/appi.ps.202100559
+
 
 
 ## V. References
