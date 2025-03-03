@@ -85,12 +85,12 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 3. Results:
 - Highest Negative Correlations:
   - Income Level (r = -0.196): Higher income is associated with lower PHQ-9 scores.
- 	- Age (r = -0.170): Older individuals tend to have lower PHQ-9 scores. 
-	- Education Level (r = -0.118): Higher education is mildly associated with lower depression scores. 
+  - Age (r = -0.170): Older individuals tend to have lower PHQ-9 scores.
+  - Education Level (r = -0.118): Higher education is mildly associated with lower depression scores. 
 
 - Highest Positive Correlations:
-	- Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
-	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
+  - Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
+  - Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
 
 4. Conclusions:
 - Socioeconomic factors (income, education, age) seem more relevant to depression scores 
