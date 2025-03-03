@@ -93,7 +93,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Marital status and gender show some association but are weaker 
 - Race, birthplace, and household size have negligible impact
 
-<iframe src="ggpairs_plot.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/ggpairs_plot.html" width=800 height=600 frameBorder=0></iframe>
 
 ## IV. Conclusion
 
