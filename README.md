@@ -114,6 +114,7 @@ lmer(PHQ9_TOTAL ~ Gender_Code +  Age_Years + Education_Level + Marital_Status + 
 - Marital status: Being married increases PHQ-9 scores.
 - Income Level: Higher income lowers PHQ-9 scores. 
 
+<iframe src="assets/LMM_results.html" width=800 height=600 frameBorder=0></iframe>
 
 ## IV. Conclusion
 
