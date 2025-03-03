@@ -73,6 +73,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
   	- Birthplace Code (77, 99)
   	  
   	- Military Service Status (7, 9)
+
   
 - Kept data consistency by applying similar filtering across other variables.
   
@@ -106,7 +107,6 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Highest Positive Correlations:
 	- Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
 	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
-	- Military Service (r = 0.027): Very weak association with PHQ-9 scores. 
 
 
 
