@@ -76,6 +76,8 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
   
 - Kept data consistency by applying similar filtering across other variables.
   
+
+
 5. Creating the PHQ-9 Depression Score
    
 - Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
@@ -105,6 +107,8 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 	- Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
 	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
 	- Military Service (r = 0.027): Very weak association with PHQ-9 scores. 
+
+
 
 4. Conclusions:
    
