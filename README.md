@@ -80,6 +80,35 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 
 ### B. **Pearson Correlation Matrix**
+1. Defining Key SES Indicators
+- Demographics: Race/Ethnicity, Gender, Age, Birthplace, Military Service Status
+- SES Factors: Education Level, Marital Status, Household Size, Income Level
+- Depression Indicator: PHQ-9 Total Score 
+
+2. Computing Pearson Correlation Matrix
+- Extracted correlation values specifically for the PHQ-9 score.
+
+3. Interpretation:
+- Highest Negative Correlations:
+	- Income Level (r = -0.196): Higher income is associated with lower PHQ-9 scores.
+ 	- Age (r = -0.170): Older individuals tend to have lower PHQ-9 scores. 
+	- Education Level (r = -0.118): Higher education is mildly associated with lower depression scores. 
+
+- Highest Positive Correlations:
+	- Marital Status (r = 0.155): Being married may be linked to higher PHQ-9 scores.
+	- Gender (r = 0.110): Females may be linked to higher PHQ-9 scores. 
+	- Military Service (r = 0.027): Very weak association with PHQ-9 scores. 
+
+- Other variables (weak or no correlation):
+	- Race/Ethnicity (r = 0.003)
+	- Exam Month (r = -0.013)
+	- Birthplace (r = -0.045)
+	- Household Size (r = 0.010) 
+
+4. Conclusions:
+- Socioeconomic factors (income, education, age) seem more relevant to depression scores 
+- Marital status and gender show some association but are weaker 
+- Race, birthplace, and household size have negligible impact
 
 
 
