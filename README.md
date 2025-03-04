@@ -94,7 +94,6 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Marital status and gender show some association but are weaker 
 - Race, birthplace, and household size have negligible impact
 
-<iframe src="assets/ggpairs_plot.html" width=800 height=600 frameBorder=0></iframe>
 
 ### C. **Linear Mixed-Effects Model (LMM) with PSU as a Random Effect**
 This model showcases how socioeconomic and demographic factors impact PHQ-9 scores, while accounting for PSU (Primary Sampling Unit) clustering. 
