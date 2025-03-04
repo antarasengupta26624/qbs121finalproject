@@ -43,8 +43,6 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 ## III. Methods
 
-**Table 1:**
-<iframe src="assets/table1.html" width=800 height=600 frameBorder=0></iframe>
 
 ### A. **Data Wrangling**
 
@@ -68,6 +66,9 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 - Identified PHQ-9 questionnaire variables (‘DPQ010’ to ‘DPQ090’).
 - Converted values 7 (refused) and 9 (missing) to NA.
 - Calculated PHQ-9 Total Score as the sum of all NA responses.
+
+  **Table 1:**
+<iframe src="assets/table1.html" width=800 height=600 frameBorder=0></iframe>
 
 
 ### B. **Pearson Correlation Matrix**
