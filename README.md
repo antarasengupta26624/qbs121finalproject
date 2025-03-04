@@ -15,8 +15,9 @@
 I. Introduction \
 II. Objectives \
 III. Methods* \
-IV. Conclusions \
-V. References \
+IV. Results \
+V. Conclusions \
+VI. References \
 *All code can be found in Methods_final.pdf
 
 
@@ -128,7 +129,9 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 <iframe src="assets/Log Regression Final .html" width=800 height=600 frameBorder=0></iframe>
 <iframe src="assets/ORFin.html" width=600 height=400 frameBorder=0></iframe>
 
-## IV. Conclusion
+## IV. Results
+
+## V. Conclusion
 This analysis highlights how a myriad of socioeconomic disparities affect mental health, particularly concerning depression. Using the NHANES dataset, our findings align with existing literature, reinforcing the idea that individuals with lower socioeconomic status (SES) experience are more likely to suffer from depression.
 
 Income, education, and age were among the strongest predictors of depression scores, with lower income and educational attainment associated with higher depression severity. Additionally, while women and married individuals showed an association with higher PHQ_9 scores, their effects were comparatively weaker. Lastly, there was no statistically significant evidence that race, years lived in the US, and household size had an affect on depression scores.
@@ -136,7 +139,7 @@ Income, education, and age were among the strongest predictors of depression sco
 Moreover, the findings support the idea that structural factors, such as economic stability and access to education, play a crucial role in shaping mental health outcomes. Our findings emphasize the importance of considering socioeconomic factors when treating and detecting depression
 
 
-## V. References
+## VI. References
 1. Henking C, Reeves A, Chrisinger B. Global inequalities in mental health problems: understanding the predictors of lifetime prevalence, treatment utilisation and perceived helpfulness across 111 countries. Prev Med. 2023;177:107769. doi:10.1016/j.ypmed.2023.107769
 
 2. Buckman JEJ, Saunders R, Stott J, et al. Socioeconomic Indicators of Treatment Prognosis for Adults With Depression: A Systematic Review and Individual Patient Data Meta-analysis. JAMA Psychiatry. 2022;79(5):406. doi:10.1001/jamapsychiatry.2022.0100
