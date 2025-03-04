@@ -75,17 +75,21 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 - Converted values 7 (refused) and 9 (missing) to NA.
 - Calculated PHQ-9 Total Score as the sum of all NA responses.
 
+### B. **Packages and Tests Employed**
+
+### C. **Sample Characteristics**
   **Table 1:**
 <iframe src="assets/table1.html" width=800 height=600 frameBorder=0></iframe>
 
+## IV. Results
 
-### B. **Pearson Correlation Matrix**
+### A. **Correlation Matrix Heatmap**
 1. Defining Key SES Indicators
 - Demographics: Race/Ethnicity, Gender, Age, Birthplace, Military Service Status
 - SES Factors: Education Level, Marital Status, Household Size, Income Level
 - Depression Indicator: PHQ-9 Total Score
   
-2. Computing Pearson Correlation Matrix 
+2. Computing Correlation Matrix 
 - Extracted correlation values specifically for the PHQ-9 score.
 
 3. Results:
@@ -103,8 +107,11 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 - Marital status and gender show some association but are weaker 
 - Race, birthplace, and household size have negligible impact
 
+### B. **Exploratory Data Visualizations**
 
-### C. **Linear Mixed-Effects Model (LMM) with PSU as a Random Effect**
+### C. **T-Test**
+
+### D. **Linear Mixed-Effects Model (LMM) with PSU as a Random Effect**
 This model showcases how socioeconomic and demographic factors impact PHQ-9 scores, while accounting for PSU (Primary Sampling Unit) clustering. 
 
 1. Why this model?
@@ -124,12 +131,36 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 
 <iframe src="assets/lm_table.html" width=800 height=600 frameBorder=0></iframe>
 
-### D. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
+### E. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
+
+This logistic regression model examines how socioeconomic and demographic factors influence the likelihood of having a PHQ-9 depression score above the median threshold.
+
+1. Why this model?
+- The PHQ-9 score was dichotomized at the median, allowing us to assess predictors of higher depressive symptoms.
+- Logistic regression estimates the odds of being in the higher-depression category based on the factors.
+- Odds ratios (OR) provide an interpretable measure of relative risk across predictor variables.
+
+2. Model Summary
+- Intercept (OR = 2.29, 95% CI: 1.69 – 3.10): The baseline odds of having a PHQ-9 score above the median.
+- Gender: Women are 1.59 times more likely to have higher depression scores than men (95% CI: 1.43 – 1.76).
+- Income: Individuals with a family income-to-poverty ratio of 5 or more have 28% lower odds of higher depression scores (OR = 0.722, 95% CI: 0.632 – 0.823).
+- Age: Each additional year of age is associated with slightly lower odds of higher depression (OR = 0.984, 95% CI: 0.981 – 0.987).
+- Education:
+	- Individuals with some college or an associate’s degree have 28% lower odds of higher depression scores (OR = 0.718, 95% CI: 0.557 – 0.922).
+	- College graduates or above have the lowest odds (OR = 0.631, 95% CI: 0.488 – 0.813), reinforcing the protective effect of higher education.
+	- High school graduates and those with less than a high school education also had lower odds, though estimates were less precise.
+- Marital Status:
+	- Widowed, divorced, or separated individuals have 43% higher odds of high depression scores (OR = 1.43, 95% CI: 1.26 – 1.62).
+	- Never-married individuals have 55% higher odds (OR = 1.55, 95% CI: 1.35 – 1.78), suggesting a link between marital status and depressive symptoms.
+
+3. Conclusions
+- Lower income and lower education are key predictors of higher PHQ-9 scores, aligning with prior research on socioeconomic disparities in mental health.
+- Being female and not being married are significant risk factors for higher depression scores.
+- Older individuals have slightly lower odds of depression, potentially due to resilience or generational differences in mental health experiences.
 
 <iframe src="assets/Log Regression Final .html" width=800 height=600 frameBorder=0></iframe>
 <iframe src="assets/ORFin.html" width=600 height=400 frameBorder=0></iframe>
 
-## IV. Results
 
 ## V. Conclusion
 This analysis highlights how a myriad of socioeconomic disparities affect mental health, particularly concerning depression. Using the NHANES dataset, our findings align with existing literature, reinforcing the idea that individuals with lower socioeconomic status (SES) experience are more likely to suffer from depression.
