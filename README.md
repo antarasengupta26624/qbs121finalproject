@@ -119,7 +119,7 @@ lmer(PHQ9_TOTAL ~ Gender_Code +  Age_Years + Education_Level + Marital_Status + 
 ### D. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
 
 <iframe src="assets/Log Regression Final .html" width=800 height=600 frameBorder=0></iframe>
-
+<iframe src="assets/OR.png" width=800 height=600 frameBorder=0></iframe>
 
 ## IV. Conclusion
 
