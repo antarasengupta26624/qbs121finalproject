@@ -150,6 +150,3 @@ Moreover, the findings support the idea that structural factors, such as economi
 
 5. Mills JA, Suresh V, Chang L, et al. Socioeconomic Predictors of Treatment Outcomes Among Adults With Major Depressive Disorder. Psychiatr Serv. 2022;73(9):965-969. doi:10.1176/appi.ps.202100559
 
-
-
-## V. References
