@@ -33,13 +33,20 @@ Unfortunately but unsurprisingly, the COVID-19 pandemic has exacerbated these di
 
 Moreover, socioeconomic factors also influence the utilization and perceived helpfulness of mental health treatments. Higher SES individuals are more likely to talk to a mental health professional and perceive the treatment as helpful.[1] However, disparities in treatment outcomes are evident, with lower SES individuals experiencing slower and less improvement in response to pharmacotherapy for major depression.[5]
 
-Therefore, there is strong theory suggesting that socioeconomic disparities in depression are significant and multifactorial, with lower SES associated with higher prevalence, greater severity, and poorer treatment outcomes for depression. Addressing these disparities requires firstly identification of the problem then procurement of targeted interventions that consider such broader socioeconomic determinants of mental health. Employing the NHANES sample will allow for a nationwide examination of mental health variation. The aim of the present study is to elucidate specific socioeconomic disparities in mental health; specifically, we will operationalize mental health problems with a depression scale and include highly correlated socioeconomic indicators in our modeling.
+Therefore, there is strong theory suggesting that socioeconomic disparities in depression are significant and multifactorial, with lower SES associated with higher prevalence, greater severity, and poorer treatment outcomes for depression. Addressing these disparities requires firstly identification of the problem then procurement of targeted interventions that consider such broader socioeconomic determinants of mental health. Employing the NHANES sample will allow for a nationwide examination of mental health variation.
 
 
 
 
 ## II. Objectives
+The aim of the present study is to elucidate specific socioeconomic disparities in mental health by leveraging data from the NHANES 2021–2023 survey. Specifically, we will operationalize mental health problems using the Patient Health Questionnaire-9 (PHQ-9) depression scale and analyze its associations with key socioeconomic indicators such as income, education level, employment status, and other covariates.
 
+By applying statistical modeling techniques learned in QBS 121, we aim to:
+
+1. Quantify the relationship between SES and depression severity.
+2. Visualize the role of demographic and structural factors affecting depression scores.
+3. Evaluate socioeconomic influences on mental health severity through regression modeling .
+4. Identify policy-relevant findings via post-hoc analyses.
 
 ## III. Methods
 
