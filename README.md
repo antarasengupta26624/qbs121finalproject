@@ -43,6 +43,7 @@ Therefore, there is strong theory suggesting that socioeconomic disparities in d
 
 ## III. Methods
 
+**Table 1:**
 <iframe src="assets/table1.html" width=800 height=600 frameBorder=0></iframe>
 
 ### A. **Data Wrangling**
