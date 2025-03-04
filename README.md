@@ -104,7 +104,6 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 - LMM accounts for PSU variability, improving overall model accuracy. 
 
 2. Model Summary
-lmer(PHQ9_TOTAL ~ Gender_Code +  Age_Years + Education_Level + Marital_Status + Income_Level_as_Poverty_Ratio + (1 | SDMVPSU), data = nhanes_cleaned, REML = FALSE)
 - Random effect (PSU variance): 0.00385 -  minimal clustering impact. 
 - Residual variance: 20.59 - most variation is individual level
 
