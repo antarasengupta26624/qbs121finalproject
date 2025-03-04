@@ -145,12 +145,12 @@ This logistic regression model examines how socioeconomic and demographic factor
 - Income: Individuals with a family income-to-poverty ratio of 5 or more have 28% lower odds of higher depression scores (OR = 0.722, 95% CI: 0.632 – 0.823).
 - Age: Each additional year of age is associated with slightly lower odds of higher depression (OR = 0.984, 95% CI: 0.981 – 0.987).
 - Education:
-	- Individuals with some college or an associate’s degree have 28% lower odds of higher depression scores (OR = 0.718, 95% CI: 0.557 – 0.922).
-	- College graduates or above have the lowest odds (OR = 0.631, 95% CI: 0.488 – 0.813), reinforcing the protective effect of higher education.
-	- High school graduates and those with less than a high school education also had lower odds, though estimates were less precise.
+  - Individuals with some college or an associate’s degree have 28% lower odds of higher depression scores (OR = 0.718, 95% CI: 0.557 – 0.922).
+  - College graduates or above have the lowest odds (OR = 0.631, 95% CI: 0.488 – 0.813), reinforcing the protective effect of higher education.
+  - High school graduates and those with less than a high school education also had lower odds, though estimates were less precise.
 - Marital Status:
-	- Widowed, divorced, or separated individuals have 43% higher odds of high depression scores (OR = 1.43, 95% CI: 1.26 – 1.62).
-	- Never-married individuals have 55% higher odds (OR = 1.55, 95% CI: 1.35 – 1.78), suggesting a link between marital status and depressive symptoms.
+  - Widowed, divorced, or separated individuals have 43% higher odds of high depression scores (OR = 1.43, 95% CI: 1.26 – 1.62).
+  - Never-married individuals have 55% higher odds (OR = 1.55, 95% CI: 1.35 – 1.78), suggesting a link between marital status and depressive symptoms.
 
 3. Conclusions
 - Lower income and lower education are key predictors of higher PHQ-9 scores, aligning with prior research on socioeconomic disparities in mental health.
