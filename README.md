@@ -126,7 +126,7 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 - Gender (Female): Females have higher PHQ-9 scores.
 - Age: Older age is linked to lower PHQ-9 scores.
 - Education: Higher education lowers PHQ-9 scores.
-- Marital status: Being married increases PHQ-9 scores.
+- Marital status: Not being married increases PHQ-9 scores.
 - Income Level: Higher income lowers PHQ-9 scores. 
 
 <iframe src="assets/lm_table.html" width=800 height=600 frameBorder=0></iframe>
