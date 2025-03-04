@@ -119,17 +119,21 @@ lmer(PHQ9_TOTAL ~ Gender_Code +  Age_Years + Education_Level + Marital_Status + 
 ### D. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
 
 <iframe src="assets/Log Regression Final .html" width=800 height=600 frameBorder=0></iframe>
-<iframe src="assets/OR.png" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/OR.png" width=600 height=400 frameBorder=0></iframe>
 
 ## IV. Conclusion
 
 
 ## V. References
-Henking C, Reeves A, Chrisinger B. Global inequalities in mental health problems: understanding the predictors of lifetime prevalence, treatment utilisation and perceived helpfulness across 111 countries. Prev Med. 2023;177:107769. doi:10.1016/j.ypmed.2023.107769
-Buckman JEJ, Saunders R, Stott J, et al. Socioeconomic Indicators of Treatment Prognosis for Adults With Depression: A Systematic Review and Individual Patient Data Meta-analysis. JAMA Psychiatry. 2022;79(5):406. doi:10.1001/jamapsychiatry.2022.0100
-Lee H, Singh GK. Monthly trends in self-reported health status and depression by race/ethnicity and socioeconomic status during the COVID-19 Pandemic, United States, April 2020 – May 2021. Ann Epidemiol. 2021;63:52-62. doi:10.1016/j.annepidem.2021.07.014
-Herrmann K, Beese F, Wollgast L, et al. Temporal dynamics of socioeconomic inequalities in depressive and anxiety symptoms during the COVID-19 pandemic: a scoping review. Front Public Health. 2024;12:1397392. doi:10.3389/fpubh.2024.1397392
-Mills JA, Suresh V, Chang L, et al. Socioeconomic Predictors of Treatment Outcomes Among Adults With Major Depressive Disorder. Psychiatr Serv. 2022;73(9):965-969. doi:10.1176/appi.ps.202100559
+1. Henking C, Reeves A, Chrisinger B. Global inequalities in mental health problems: understanding the predictors of lifetime prevalence, treatment utilisation and perceived helpfulness across 111 countries. Prev Med. 2023;177:107769. doi:10.1016/j.ypmed.2023.107769
+
+2. Buckman JEJ, Saunders R, Stott J, et al. Socioeconomic Indicators of Treatment Prognosis for Adults With Depression: A Systematic Review and Individual Patient Data Meta-analysis. JAMA Psychiatry. 2022;79(5):406. doi:10.1001/jamapsychiatry.2022.0100
+
+3. Lee H, Singh GK. Monthly trends in self-reported health status and depression by race/ethnicity and socioeconomic status during the COVID-19 Pandemic, United States, April 2020 – May 2021. Ann Epidemiol. 2021;63:52-62. doi:10.1016/j.annepidem.2021.07.014
+
+4. Herrmann K, Beese F, Wollgast L, et al. Temporal dynamics of socioeconomic inequalities in depressive and anxiety symptoms during the COVID-19 pandemic: a scoping review. Front Public Health. 2024;12:1397392. doi:10.3389/fpubh.2024.1397392
+
+5. Mills JA, Suresh V, Chang L, et al. Socioeconomic Predictors of Treatment Outcomes Among Adults With Major Depressive Disorder. Psychiatr Serv. 2022;73(9):965-969. doi:10.1176/appi.ps.202100559
 
 
 
