@@ -110,6 +110,28 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 
 
 ### B. **Exploratory Data Visualizations**
+1. *Age Distribution of Depression Severity*
+<iframe src="assets/age_distrib.html" width="100%" height="500px"></iframe>
+
+- **What is the visualization showing?**
+- **Why visualize this?**
+- **Conclusions**
+
+2. *3-D Scatterplot*
+- **What is the visualization showing?**
+- **Why visualize this?**
+- **Conclusions**
+
+4. *Violin Plot of Gender*
+- **What is the visualization showing?**
+- **Why visualize this?**
+- **Conclusions**
+
+6. *Boxplots*
+- **What is the visualization showing?**
+- **Why visualize this?**
+- **Conclusions**
+
 
 ### C. **T-Test**
 
