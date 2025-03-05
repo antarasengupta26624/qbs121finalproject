@@ -106,6 +106,9 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 - Marital status and gender show some association but are weaker 
 - Race, birthplace, and household size have negligible impact
 
+<iframe src="assets/heatmap_cor.html" width="100%" height="500px"></iframe>
+
+
 ### B. **Exploratory Data Visualizations**
 
 ### C. **T-Test**
