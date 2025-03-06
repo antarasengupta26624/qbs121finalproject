@@ -154,7 +154,6 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 - Income Level: Higher income lowers PHQ-9 scores. 
 
 <iframe src="assets/lmm_table.html" width=800 height=600 frameBorder=0></iframe>
-
 <iframe src="assets/PHQ9_Coefficients.html" width=800 height=600 frameBorder=0></iframe>
 
 ### E. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
