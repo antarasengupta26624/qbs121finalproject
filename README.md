@@ -155,11 +155,6 @@ Visualizing the distribution of PHQ-9 scores by education level and gender allow
 The plot suggests that females generally report higher PHQ-9 scores than males at all education levels, indicating greater levels of depressive symptoms among women. Moreover, higher educational attainment appears to correspond to lower PHQ-9 scores for both genders, highlighting the influence of education on mental health. These findings emphasize the importance of considering both gender and education in understanding mental health outcomes.
 
 
-6. *Boxplots*
-- **What is the visualization showing?**
-- **Why visualize this?**
-- **Conclusions**
-
 
 ### C. **T-Test**
 
