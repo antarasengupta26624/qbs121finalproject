@@ -118,7 +118,11 @@ Our analysis employed a variety of statistical tests to investigate the relation
 <iframe src="assets/age_distrib2.html" width="100%" height="500px"></iframe>
 
 - **What is the visualization showing?**
+This pyramid population plot displays the distribution of depression severity levels (low vs. high) across different age groups. The x-axis represents the percentage of individuals in each category, with negative values indicating low depression (green) and positive values representing high depression (blue).
+
 - **Why visualize this?**
+Visualizing depression distribution across age groups allows for a clearer understanding of how depression prevalence changes with age. It helps identify trends in mental health across different life stages and highlights potentially vulnerable age groups that may require targeted interventions.
+
 - **Conclusions**
 
 2. *3-D Scatterplot*
