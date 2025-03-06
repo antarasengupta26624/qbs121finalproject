@@ -124,15 +124,31 @@ Our analysis employed a variety of statistical tests to investigate the relation
 <iframe src="assets/cube.html" width=800 height=600 frameBorder=0></iframe>
 
 - **What is the visualization showing?**
+  
+The 3D scatterplot illustrates the relationships between Income to Poverty Ratio, Age, and PHQ-9 Score, with each point representing an individual’s data in these three dimensions. The color gradient indicates varying levels of depressive symptoms, with darker colors reflecting lower scores.
+
 - **Why visualize this?**
+
+  Visualizing these relationships helps to identify patterns in how financial stability and age may influence mental health, allowing for a clearer understanding of the factors contributing to depressive symptoms and facilitating more targeted interventions.
+  
 - **Conclusions**
+  
+The plot suggests a negative correlation between income-to-poverty ratio and PHQ-9 scores, indicating that individuals with higher financial stability tend to report fewer depressive symptoms. Additionally, age trends appear to show that older individuals often have lower scores, highlighting the complex interplay between socioeconomic factors and mental health.
+
+
 
 4. *Violin Plot of Gender*
 <iframe src="assets/violin.html" width=800 height=600 frameBorder=0></iframe>
 
 - **What is the visualization showing?**
+The violin plot illustrates the distribution of PHQ-9 scores across different education levels, differentiated by gender. Each "violin" shape represents the density of PHQ-9 scores for males (blue) and females (red) within each education category, highlighting how scores vary between genders at each educational attainment level.
+
 - **Why visualize this?**
+Visualizing the distribution of PHQ-9 scores by education level and gender allows for a clearer comparison of mental health outcomes across diverse educational backgrounds and identifies potential gender disparities in depressive symptoms, which can inform targeted mental health interventions.
+
 - **Conclusions**
+The plot suggests that females generally report higher PHQ-9 scores than males at all education levels, indicating greater levels of depressive symptoms among women. Moreover, higher educational attainment appears to correspond to lower PHQ-9 scores for both genders, highlighting the influence of education on mental health. These findings emphasize the importance of considering both gender and education in understanding mental health outcomes.
+
 
 6. *Boxplots*
 - **What is the visualization showing?**
@@ -141,6 +157,15 @@ Our analysis employed a variety of statistical tests to investigate the relation
 
 
 ### C. **T-Test**
+
+The selection of statistical tests for each variable in the analysis stems from the nature of the variables involved and the assumptions associated with each test. Independent t-tests were chosen for the binary categorical variable gender because this test compares the means of two groups—in this case, the average PHQ-9 total score for males and females—allowing for an assessment of the difference between these two distinct populations. For multilevel categorical variables like education_level and marital_status , ANOVA (Analysis of Variance) was employed, as this test extends the t-test methodology to compare means across more than two groups. It evaluates whether there are any statistically significant differences among the group means. For the continuous variables income_to_poverty_ratio and age_years , Pearson correlation coefficients were calculated to determine the strength and direction of the linear relationships with the PHQ-9 total score. This approach is appropriate as both predictors are continuous, enabling the assessment of how changes in these variables are associated with changes in the PHQ-9 scores. Together, these tests provide a comprehensive analysis of the potential relationships between various factors and the PHQ-9 total score, adhering to appropriate statistical methodologies based on data characteristics.
+
+<iframe src="assets/results.html" width=800 height=600 frameBorder=0></iframe>
+
+
+The results of the statistical analyses reveal significant relationships between several demographic and socioeconomic factors and mental health, as indicated by the PHQ-9 total score. The independent t-test shows a substantial difference in PHQ-9 scores between genders, suggesting that one gender—likely women, based on typical coding—reports higher levels of depressive symptoms than the other. The ANOVA results for education level and marital status both indicate strong and significant differences in PHQ-9 scores among the various groups, implying that individuals with different educational backgrounds and marital situations experience varying levels of mental health challenges, signaling the importance of these social determinants. Furthermore, the Pearson correlation analyses reveal weak negative correlations between PHQ-9 scores and both income-to-poverty ratio and age. Specifically, higher income-to-poverty ratios are associated with lower PHQ-9 scores, indicating better mental health among those with greater financial stability. Similarly, older individuals tend to have slightly lower PHQ-9 scores, suggesting that age may also play a role in mental health outcomes. Collectively, these findings emphasize the significance of both social and economic factors in influencing mental health, highlighting the need for targeted interventions in these areas.
+
+
 
 ### D. **Linear Mixed-Effects Model (LMM) with PSU as a Random Effect**
 This model showcases how socioeconomic and demographic factors impact PHQ-9 scores, while accounting for PSU (Primary Sampling Unit) clustering. 
