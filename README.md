@@ -244,8 +244,10 @@ This analysis expands on the previous logistic regression to explore the impact 
 - Ethnicity alone is not a strong predictor of depression risk when controlling for socioeconomic and demographic factors. Other studies have acknowledged how the impact of race/ethnicity was unclear in the past. However, recent studies have shown evidence for an association between race and depression. [6]
 - Longer residency in the U.S. appears to be associated with a higher likelihood of depressive symptoms, with those in the country for 20+ years facing the highest risk. Previous studies have also confirmed this, calling for a focus on preventative care through "community-based" care. [7]
   
-<iframe src="assets/race_logreg.html" width="100%" height="500px"></iframe>
-<iframe src="assets/immigration_logreg2.html" width="100%" height="500px"></iframe>
+<iframe src="assets/race_logreg.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/immigration_logreg2.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/immigrantOR.html" width=800 height=600 frameBorder=0></iframe>
+
 
 ## V. Conclusion
 This analysis highlights how a myriad of socioeconomic disparities affect mental health, particularly concerning depression. Using the NHANES dataset, our findings align with existing literature, reinforcing the idea that individuals with lower socioeconomic status (SES) experience are more likely to suffer from depression.
