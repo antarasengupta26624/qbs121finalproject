@@ -76,6 +76,9 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 - Calculated PHQ-9 Total Score as the sum of all NA responses.
 
 ### B. **Packages and Tests Employed**
+In this project, we utilized a range of packages from both R and Python to facilitate data management, statistical analysis, and visualization. In R, we employed core functions in Base R alongside packages such as dplyr for data manipulation, ggplot2 for creating static visualizations, and plotly for interactive graphics. Additional libraries like Hmisc, MASS, and gtsummary provided tools for statistical models and summary statistics. In Python, we leveraged packages like pandas for data manipulation, NumPy for numerical operations, and SciPy to conduct statistical tests. Visualization was enhanced with Matplotlib and Seaborn, while machine learning tasks were performed using sklearn for logistic regression analysis.
+
+Our analysis employed a variety of statistical tests to investigate the relationships between socioeconomic factors and mental health outcomes. We conducted T-tests to compare mean depression scores across different income and education groups, examining the significance of these differences. A correlation analysis using Pearson’s method was performed to assess relationships between socioeconomic indicators and the PHQ-9 depression scores. We also utilized linear mixed-effects models (LMM) to account for clustering in the survey data and logistic regression to determine odds ratios for the likelihood of higher depression symptoms based on demographic and socioeconomic variables. Together, these tests provided a comprehensive understanding of the complexities underlying socioeconomic disparities in mental health.
 
 ### C. **Sample Characteristics**
   **Table 1:**
@@ -118,11 +121,15 @@ By applying statistical modeling techniques learned in QBS 121, we aim to:
 - **Conclusions**
 
 2. *3-D Scatterplot*
+<iframe src="assets/cube.html" width=800 height=600 frameBorder=0></iframe>
+
 - **What is the visualization showing?**
 - **Why visualize this?**
 - **Conclusions**
 
 4. *Violin Plot of Gender*
+<iframe src="assets/violin.html" width=800 height=600 frameBorder=0></iframe>
+
 - **What is the visualization showing?**
 - **Why visualize this?**
 - **Conclusions**
