@@ -130,17 +130,25 @@ The chart suggests that younger age groups have a higher percentage of individua
 <iframe src="assets/cube.html" width=800 height=600 frameBorder=0></iframe>
 
 - **What is the visualization showing?**
-  
-The 3D scatterplot illustrates the relationships between Income to Poverty Ratio, Age, and PHQ-9 Score, with each point representing an individual’s data in these three dimensions. The color gradient indicates varying levels of depressive symptoms, with darker colors reflecting lower scores.
+The 3D scatterplot illustrates the relationships between Income to Poverty Ratio, Age, and PHQ-9 Score, with each point representing an individual’s data in these three dimensions. The color gradient indicates varying levels of household sizes, with darker colors reflecting smaller households, and lighter colors reflecting larger ones.
 
 - **Why visualize this?**
-
-  Visualizing these relationships helps to identify patterns in how financial stability and age may influence mental health, allowing for a clearer understanding of the factors contributing to depressive symptoms and facilitating more targeted interventions.
+Visualizing these relationships helps to identify patterns in how financial stability, household size and age may influence mental health, allowing for a clearer understanding of the factors contributing to depressive symptoms and facilitating more targeted interventions.
   
 - **Conclusions**
-  
-The plot suggests a negative correlation between income-to-poverty ratio and PHQ-9 scores, indicating that individuals with higher financial stability tend to report fewer depressive symptoms. Additionally, age trends appear to show that older individuals often have lower scores, highlighting the complex interplay between socioeconomic factors and mental health.
+The plot suggests a negative correlation between income-to-poverty ratio and PHQ-9 scores, indicating that individuals with higher financial stability tend to report fewer depressive symptoms. We also see that those with larger households tend to report lower depression scores as well. Additionally, age trends appear to show that older individuals often have lower scores, highlighting the complex interplay between socioeconomic factors and mental health.
 
+3. *Box Plot of Race and Marital Status*
+<iframe src="assets/race_married_phq.html" width=800 height=600 frameBorder=0></iframe>
+
+- **What is the visualization showing?**
+The box plot displays the distribution of PHQ-9 total scores categorized by race and differentiated by marital status. Each box represents the interquartile range of PHQ-9 scores for each racial group, with colors indicating different marital statuses: married (blue), never married (red), and widowed/divorced (green). Individual data points are also shown to highlight outliers.
+
+- **Why visualize this?**
+Visualizing PHQ-9 scores across different races and marital statuses aids in understanding how these factors might influence mental health outcomes. It provides a clear comparison and identifies potential disparities in depressive symptoms among various demographic groups, which could guide targeted mental health initiatives.
+
+- **Conclusions**
+The plot suggests that marital status influences PHQ-9 scores across racial categories, with married individuals potentially reporting lower scores compared to those who are never married or widowed/divorced. Additionally, variations among racial groups can be observed, indicating the need for tailored mental health interventions that consider both race and marital status to better address mental health disparities.
 
 
 4. *Violin Plot of Gender*
