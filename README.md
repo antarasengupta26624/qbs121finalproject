@@ -155,6 +155,8 @@ This model showcases how socioeconomic and demographic factors impact PHQ-9 scor
 
 <iframe src="assets/lm_table.html" width=800 height=600 frameBorder=0></iframe>
 
+<iframe src="assets/PHQ9_Coefficients.html" width=800 height=600 frameBorder=0></iframe>
+
 ### E. **Binary Logistic Regression for PHQ-9 Depression (Median Split)**
 
 This logistic regression model examines how socioeconomic and demographic factors influence the likelihood of having a PHQ-9 depression score above the median threshold.
