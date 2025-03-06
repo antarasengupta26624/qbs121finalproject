@@ -1,0 +1,477 @@
+---
+title: "QBS Final Project"
+author: "Esmeralda Abreu"
+date: "2025-03-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(reshape2) 
+library(plotly) 
+library(htmlwidgets)
+library(gtsummary)
+library(gt)
+library(broom)
+```
+
+
+
+```{r}
+nhanes_raw <- read.csv("nhanes_imputed_1.csv")
+
+# Define column renaming
+nhanes <- nhanes_raw %>%
+  rename(
+    respondent_id = SEQN,
+    depression_q1 = DPQ010,
+    depression_q2 = DPQ020,
+    depression_q3 = DPQ030,
+    depression_q4 = DPQ040,
+    depression_q5 = DPQ050,
+    depression_q6 = DPQ060,
+    depression_q7 = DPQ070,
+    depression_q8 = DPQ080,
+    depression_q9 = DPQ090,
+    depression_q10 = DPQ100,
+    survey_year = SDDSRVYR,
+    respondent_status = RIDSTATR,
+    gender = RIAGENDR,
+    age_years = RIDAGEYR,
+    ethnicity_group1 = RIDRETH1,
+    ethnicity_group3 = RIDRETH3,
+    exam_month = RIDEXMON,
+    exam_age_months = RIDEXAGM,
+    military_status = DMQMILIZ,
+    birth_place = DMDBORN4,
+    years_in_usa = DMDYRUSR,
+    education_level = DMDEDUC2,
+    marital_status = DMDMARTZ,
+    pregnancy_status = RIDEXPRG,
+    household_size = DMDHHSIZ,
+    household_gender = DMDHRGND,
+    household_relationship_age = DMDHRAGZ,
+    household_relationship_education = DMDHREDZ,
+    household_relationship_marital = DMDHRMAZ,
+    household_relationship_employment = DMDHSEDZ,
+    interview_weight_2yr = WTINT2YR,
+    exam_weight_2yr = WTMEC2YR,
+    sample_stratum = SDMVSTRA,
+    sample_psu = SDMVPSU,
+    income_to_poverty_ratio = INDFMPIR,
+    phq9_total_score = PHQ9_TOTAL
+  )
+
+colnames(nhanes)
+interest_cols <- c("income_to_poverty_ratio", "education_level", "gender",
+                   "marital_status", "age_years")
+```
+# Immigrant Regressions
+```{r}
+## selecting an immigrant sibsection
+immigrant_df <- nhanes %>% 
+  filter(birth_place == 2 & !(years_in_usa %in% c(77, 99))) %>% 
+  select(years_in_usa, phq9_total_score, gender, income_to_poverty_ratio,
+         marital_status, education_level, marital_status, age_years, sample_psu,
+          ethnicity_group3) %>% 
+  mutate(income_category = cut(income_to_poverty_ratio, 
+                               breaks = seq(0, max(income_to_poverty_ratio, 
+                                                   na.rm = TRUE) + 1, by = 1), 
+                               labels = as.character(
+                                 1:(length(seq(0, max(income_to_poverty_ratio, 
+                                                      na.rm = TRUE), by = 1)))), 
+                               include.lowest = TRUE, right = FALSE))  %>% 
+  mutate(ethnicity_group3 = recode(ethnicity_group3,
+                              `1` = "Hispanic",
+                              `2` = "Hispanic",
+                              `3` = "White",
+                              `4` = "Black",
+                              `6` = "Asian",
+                              `7` = "Other"))
+
+# creating a binary phq-9 outcome
+immigrant_df <-  immigrant_df %>%
+  mutate(phq9_binary = ifelse(phq9_total_score >= (median(phq9_total_score)), 1, 0))
+
+immigrant_df$phq9_binary <- factor(immigrant_df$phq9_binary, 
+                                   levels = c(0, 1), 
+                                   labels = c("Low Depression", "High Depression"))
+
+# releveling years in the US 
+immigrant_df$us_years_factor <- factor(immigrant_df$years_in_usa, 
+                    levels = c(1, 2, 3, 4, 5, 6), 
+                    labels = c("Less than 1 year", 
+                               "1 to 4 years", 
+                               "5 to 9 years", 
+                               "10 to 14 years", 
+                               "15 to 19 years", 
+                               "20 years or more"))
+
+immigrant_df$us_years_factor <- relevel(immigrant_df$us_years_factor, ref = "Less than 1 year")
+
+immigrant_df$us_years_factor
+
+
+# logreg model
+summary(immigrant_model <- glm(phq9_binary ~ us_years_factor + gender + income_category 
+            + marital_status + education_level + age_years, 
+            family = binomial(link = "logit"), data = immigrant_df))
+
+
+# anova - not sig
+summary(anova_model <- aov(phq9_total_score ~ us_years_factor, 
+                           data = immigrant_df))
+
+```
+
+
+
+
+
+# Race/Ethnicity Regression
+```{r}
+## selecting an immigrant subsection
+race_df <- nhanes %>% 
+  select(phq9_total_score, gender, income_to_poverty_ratio,
+         marital_status, education_level, marital_status, age_years, 
+         ethnicity_group3)  %>% 
+  mutate(ethnicity_group3 = recode(ethnicity_group3,
+                              `1` = "Hispanic",
+                              `2` = "Hispanic",
+                              `3` = "White",
+                              `4` = "Black",
+                              `6` = "Asian",
+                              `7` = "Other"))
+# creating a binary phq-9 outcome
+race_df <-  race_df %>%
+  mutate(phq9_binary = ifelse(phq9_total_score >= (median(phq9_total_score)), 1, 0))
+
+
+
+
+# logreg model
+summary(race_logreg <- glm(phq9_binary ~ ethnicity_group3 + gender + income_to_poverty_ratio 
+            + marital_status + education_level + age_years, 
+            family = binomial(link = "logit"), data = immigrant_df))
+
+# linear model 
+summary(lm(phq9_total_score ~ ethnicity_group3 + gender + income_to_poverty_ratio 
+            + marital_status + education_level + age_years, data = race_df))
+
+# anova  - sig!
+summary(anova_model <- aov(phq9_total_score ~ ethnicity_group3, 
+                           data = race_df))
+
+
+```
+
+# Log Reg Viz
+```{r}
+immi_lm_table <- immigrant_model %>% 
+  tbl_regression(exponentiate = TRUE,  # Converts log-odds to odds ratios
+    intercept = TRUE,  # Keep intercept in model
+  )
+
+
+immi_lm_table %>% add_glance_table(
+    label = list(statistic = "Wald Chi-Square"),
+  ) %>% 
+  as_gt() %>%
+  gt::gtsave("immigration_logreg.html")
+immi_lm_table
+
+immigration_results <- broom::tidy(immigrant_model, exponentiate = TRUE, conf.int = TRUE) %>%
+  select(term, estimate, conf.low, conf.high) %>%
+  rename(Variable = term, Odds_Ratio = estimate, CI_Lower = conf.low, CI_Upper = conf.high)
+
+race_lm_table <- race_logreg %>% 
+  tbl_regression(exponentiate = TRUE,  # Converts log-odds to odds ratios
+    intercept = TRUE,  # Keep intercept in model
+  )
+
+
+race_lm_table %>% add_glance_table(
+    label = list(statistic = "Wald Chi-Square"),
+  ) %>% 
+  as_gt() %>%
+  gt::gtsave("race_logreg.html")
+
+race_results <- broom::tidy(race_logreg, exponentiate = TRUE, conf.int = TRUE) %>%
+  select(term, estimate, conf.low, conf.high) %>%
+  rename(Variable = term, Odds_Ratio = estimate, CI_Lower = conf.low, CI_Upper = conf.high)
+
+immigration_results
+race_results
+```
+
+# Heatmap
+```{r}
+viz_df <- nhanes %>%
+  select(interest_cols, phq9_total_score)
+
+cor_matrix <- cor(viz_df, use = "pairwise.complete.obs")
+
+cor_data <- melt(cor_matrix)
+cor_data
+
+colnames(cor_data) <- c("Variable 1", "Variable 2", "Correlation")
+
+# Ensure column names are correctly referenced
+p <-ggplot(cor_data, aes(x = `Variable 1`, y = `Variable 2`, fill = Correlation)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "#3690c0", mid = "white", high = "#74a9cf", midpoint = 0) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 6, angle = 30, hjust = 0, vjust = 0),  # Adjust text angle
+    axis.text.y = element_text(size = 10),  # Adjust y-axis labels
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(title = "Depression Correlation Heatmap", fill = "Correlation")
+
+heatmap <- ggplotly(p)
+heatmap
+
+htmlwidgets::saveWidget(heatmap, "heatmap_cor.html", selfcontained = TRUE)
+
+```
+
+
+# Boxplots!
+```{r}
+viz_long <- viz_df %>%
+  pivot_longer(cols = all_of(interest_cols), names_to = "name", values_to = "category")
+
+ggplot(viz_long, aes(x = category, y = phq9_total_score)) +
+  geom_boxplot(fill = "#69b3a2", color = "black") +
+  facet_wrap(~ name, scales = "free_x") +  # Separate facets for each variable
+  theme_minimal() +
+  theme(
+    strip.text = element_text(size = 12, face = "bold"),  # Improve facet labels
+    axis.text.x = element_text(angle = 45, hjust = 1)  # Rotate x-axis labels for readability
+  ) +
+  labs(title = "PHQ-9 Total Score by Different Categorical Variables",
+       x = "Category",
+       y = "PHQ-9 Total Score")
+```
+## Boxplot of martial status
+```{r}
+marital_df <- viz_df%>% 
+  filter(marital_status %in% c(1, 2, 3))
+
+plot_ly(
+  data = marital_df,
+  x = ~marital_status, 
+  y = ~phq9_total_score, 
+  type = "box"
+) %>%
+  layout(
+    title = "Interactive PHQ-9 Total Score by Unique Answers",
+    xaxis = list(title = "Marital Status"),
+    yaxis = list(title = "PHQ-9 Total Score"),
+    boxmode = "group"  
+  )
+
+```
+
+## Boxplot of income_to_poverty
+```{r}
+
+viz_df <- viz_df %>%
+  mutate(income_category = cut(income_to_poverty_ratio, 
+                               breaks = seq(0, max(income_to_poverty_ratio, 
+                                                   na.rm = TRUE) + 1, by = 1), 
+                               labels = as.character(
+                                 1:(length(seq(0, max(income_to_poverty_ratio, 
+                                                      na.rm = TRUE), by = 1)))), 
+                               include.lowest = TRUE, right = FALSE))
+
+
+
+summary(viz_df$income_category)
+
+plot_ly(
+  data = viz_df,
+  x = ~income_category, 
+  y = ~phq9_total_score, 
+  type = "box"
+) %>%
+  layout(
+    title = "Interactive PHQ-9 Total Score by Unique Answers",
+    xaxis = list(title = "income_to_poverty_ratio"),
+    yaxis = list(title = "PHQ-9 Total Score"),
+    boxmode = "group" 
+  )
+```
+
+
+## Gender boxplot
+```{r}
+viz_df <- viz_df %>% 
+ mutate(gender = recode(gender, 
+         `1` = "Male",
+         `2` = "Female"
+  ))
+
+
+plot_ly(
+  data = viz_df,
+  x = ~gender, 
+  y = ~phq9_total_score, 
+  type = "box"
+) %>%
+  layout(
+    title = "Interactive PHQ-9 Total Score by Unique Answers",
+    xaxis = list(title = "Gender"),
+    yaxis = list(title = "PHQ-9 Total Score"),
+    boxmode = "group"  
+  )
+```
+
+
+
+## household
+```{r}
+plot_ly(
+  data = nhanes,
+  x = ~household_size, 
+  y = ~phq9_total_score, 
+  type = "box"
+) %>%
+  layout(
+    title = "Interactive PHQ-9 Total Score by Unique Answers",
+    xaxis = list(title = "Household Size"),
+    yaxis = list(title = "PHQ-9 Total Score"),
+    boxmode = "group" 
+  )
+```
+
+## military service
+```{r}
+
+nhanes <- nhanes %>% 
+ mutate(military_status = recode(military_status, 
+         `1` = "Active",
+         `2` = "Not Active"
+  ))
+
+plot_ly(
+  data = nhanes,
+  x = ~military_status, 
+  y = ~phq9_total_score, 
+  type = "box"
+) %>%
+  layout(
+    title = "Interactive PHQ-9 Total Score by Unique Answers",
+    xaxis = list(title = "Household Size"),
+    yaxis = list(title = "PHQ-9 Total Score"),
+    boxmode = "group" 
+  )
+
+```
+
+
+
+# Interactive ROSE map
+```{r}
+polar_data <- viz_df %>%
+  count(education_level) %>%  # Count occurrences
+   mutate(education_level = recode(education_level,
+                              `1` = "Less than 9th grade",
+                              `2` = "9-11th grade",
+                              `3` = "HS/GED ",
+                              `4` = "Some college",
+                              `5` = "Bachelor's or More")) %>% 
+  rename(category = education_level, value = n) %>% 
+  mutate(angle = seq(0, 360, length.out = n()))  # Calculate angles for each category
+ 
+
+(polar_data$category)
+# Create the polar bar chart
+fig <- plot_ly(polar_data,
+               type = "barpolar",
+               r = ~value,  
+               theta = ~angle,
+               text = ~paste(category, ":", value),
+               hoverinfo = "text",
+               marker = list(color = c("#1f78b4", "#33a02c", "#e31a1c", "#ff7f00", "#6a3d9a"))
+)
+
+fig <- fig %>%
+  layout(
+    title = list(
+      text = "Education Level Distribution (Polar Chart)",
+      font = list(size = 20, family = "Arial", color = "#333333")),
+    polar = list(
+      angularaxis = list(
+        rotation = 90, 
+        direction = "clockwise", 
+        tickfont = list(size = 12, color = "#333333"), 
+        showline = TRUE,
+        linecolor = "#cccccc"),
+      radialaxis = list(showticklabels = FALSE)))
+
+# Display the chart
+fig
+
+```
+
+
+
+
+
+# Interactive Pyramid Population 
+```{r}
+age_breaks <- c(18, 20, 30, 40, 50, 60, 70, 80)  # Custom age breaks
+pyramid_data <- viz_df %>%
+  mutate(age_group = cut(age_years, 
+                         breaks = c(18, 20, 30, 40, 50, 60, 70, Inf), 
+                         labels = c("18-20", "20-30", "30-40", "40-50", 
+                                    "50-60", "60-70", "70+"),
+                         right = FALSE)) %>%
+   mutate(phq9_binary = ifelse(phq9_total_score >= (median(phq9_total_score)), 1, 0)) %>% 
+  count(phq9_binary, age_group) %>%
+  group_by(age_group) %>%
+  mutate(percent = (n / sum(n)) * 100, 
+         percent = ifelse(phq9_binary == 0, -percent, percent),  
+         phq9_binary = factor(phq9_binary, levels = c(0, 1), 
+                              labels = c("Low Depression", "High Depression")))  
+
+fig <- plot_ly(pyramid_data, 
+               x = ~percent, 
+               y = ~age_group, 
+               color = ~phq9_binary, 
+               type = "bar", 
+               orientation = "h") %>%
+  layout(title = " Distribution of Depression vs. Age",
+         barmode = "relative",
+         xaxis = list(title = "Percent", showgrid = FALSE),
+         yaxis = list(title = "Age Group"),
+         legend = list(x = 1, y = 1))
+
+fig  
+
+htmlwidgets::saveWidget(fig, "age_distrib2.html", selfcontained = TRUE)
+
+library(htmltools)
+
+# Define image URL or local path
+img_src <- "~Desktop/QBS 121/Final_Project/immigrantOR.png"  # Replace with your image path
+
+# Create HTML content
+html_content <- tags$html(
+  tags$body(
+    tags$img(src = img_src, style = "max-width:100%; height:auto;")
+  )
+)
+
+# Save as an HTML file
+save_html(html_content, file = "image.html")
+
+```
+
