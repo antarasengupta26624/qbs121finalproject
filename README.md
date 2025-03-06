@@ -115,7 +115,7 @@ Our analysis employed a variety of statistical tests to investigate the relation
 
 ### B. **Exploratory Data Visualizations**
 1. *Age Distribution of Depression Severity*
-<iframe src="assets/age_distrib.html" width="100%" height="500px"></iframe>
+<iframe src="assets/age_distrib2.html" width="100%" height="500px"></iframe>
 
 - **What is the visualization showing?**
 - **Why visualize this?**
