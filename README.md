@@ -193,6 +193,28 @@ This logistic regression model examines how socioeconomic and demographic factor
 <iframe src="assets/Log Regression Final .html" width=800 height=600 frameBorder=0></iframe>
 <iframe src="assets/ORFin.html" width=600 height=400 frameBorder=0></iframe>
 
+### F. **Binary Logistic Regression for PHQ-9 Depression (Median Split): Race & Immigration**
+This analysis expands on the previous logistic regression to explore the impact of ethnicity/race and years spent in the U.S. on depression severity. 
+
+1. Why this model?  
+- The PHQ-9 score was dichotomized at the median to assess predictors of higher depressive symptoms.  
+- Logistic regression estimates the odds of being in the higher-depression category based on these factors while controlling for demographic and socioeconomic variables.
+- Odds ratios (OR) provide an interpretable measure of relative risk across predictor variables.
+
+2. Model Summary  
+**Ethnicity/Race:**  
+- Compared to the reference group (Asian), none of the ethnicity groups (Black, Hispanic, Other, or White) showed a statistically significant association with higher PHQ-9 scores (all p > 0.05).  
+- The lack of significance suggests that, when adjusting for other demographic and socioeconomic factors, ethnicity/race alone does not strongly predict higher depression scores in this sample.
+
+**Years in the U.S.:**  
+*20 or more years in the U.S.:* This group had the highest odds of depressive symptoms (OR = 1.71, 95% CI: 0.94 – 3.14), approaching statistical significance (p = 0.08). This trend suggests that longer residency in the U.S. may be associated with a higher risk of depression.
+
+#### 3. Conclusions  
+- Ethnicity alone is not a strong predictor of depression risk when controlling for socioeconomic and demographic factors. Other studies have acknowledged how the impact of race/ethnicity was unclear in the past. However, recent studies have shown evidence for an association between race and depression. [6]
+- **Longer residency in the U.S. appears to be associated with a higher likelihood of depressive symptoms,** with those in the country for 20+ years facing the highest risk. Previous studies have also confirmed this, calling for a focus on preventative care through "community-based" care. [7]
+  
+<iframe src="assets/race_logreg.html" width="100%" height="500px"></iframe>
+<iframe src="assets/immigration_logreg2.html" width="100%" height="500px"></iframe>
 
 ## V. Conclusion
 This analysis highlights how a myriad of socioeconomic disparities affect mental health, particularly concerning depression. Using the NHANES dataset, our findings align with existing literature, reinforcing the idea that individuals with lower socioeconomic status (SES) experience are more likely to suffer from depression.
@@ -201,8 +223,10 @@ Income, education, and age were among the strongest predictors of depression sco
 
 Moreover, the findings support the idea that structural factors, such as economic stability and access to education, play a crucial role in shaping mental health outcomes. Our findings emphasize the importance of considering socioeconomic factors when treating and detecting depression
 
+## VI. Future Research
+- Future research should explore potential interactions between ethnicity, immigration experiences, and socioeconomic conditions to better understand mental health disparities among immigrant populations.
 
-## VI. References
+## VII. References
 1. Henking C, Reeves A, Chrisinger B. Global inequalities in mental health problems: understanding the predictors of lifetime prevalence, treatment utilisation and perceived helpfulness across 111 countries. Prev Med. 2023;177:107769. doi:10.1016/j.ypmed.2023.107769
 
 2. Buckman JEJ, Saunders R, Stott J, et al. Socioeconomic Indicators of Treatment Prognosis for Adults With Depression: A Systematic Review and Individual Patient Data Meta-analysis. JAMA Psychiatry. 2022;79(5):406. doi:10.1001/jamapsychiatry.2022.0100
@@ -212,4 +236,8 @@ Moreover, the findings support the idea that structural factors, such as economi
 4. Herrmann K, Beese F, Wollgast L, et al. Temporal dynamics of socioeconomic inequalities in depressive and anxiety symptoms during the COVID-19 pandemic: a scoping review. Front Public Health. 2024;12:1397392. doi:10.3389/fpubh.2024.1397392
 
 5. Mills JA, Suresh V, Chang L, et al. Socioeconomic Predictors of Treatment Outcomes Among Adults With Major Depressive Disorder. Psychiatr Serv. 2022;73(9):965-969. doi:10.1176/appi.ps.202100559
+
+6. Hargrove TW, Halpern CT, Gaydosh L, et al. Race/Ethnicity, Gender, and Trajectories of Depressive Symptoms Across Early- and Mid-Life Among the Add Health Cohort. J Racial Ethn Health Disparities. 2020;7(4):619-629. doi:10.1007/s40615-019-00692-8
+
+7. Ikonte CO, Prigmore HL, Dawson AZ, Egede LE. Trends in prevalence of depression and serious psychological distress in United States immigrant and non-immigrant populations, 2010 - 2016. J Affect Disord. 2020;274:719-725. doi:10.1016/j.jad.2020.05.010
 
