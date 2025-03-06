@@ -17,7 +17,8 @@ II. Objectives \
 III. Methods* \
 IV. Results \
 V. Conclusions \
-VI. References \
+VI. Future Research \
+VII. References \
 *All code can be found in Methods_final.pdf
 
 
