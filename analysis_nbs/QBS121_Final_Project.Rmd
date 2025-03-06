@@ -1,0 +1,564 @@
+---
+title: 'QBS121 Final Project: Socioeconomic Disparities in Mental Health'
+author: "Jaini Shah"
+date: "2025-02-25"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(haven)
+library(survey)
+library(tidyverse)
+library(dplyr)
+library(reshape2)
+library(lme4)
+library(lmerTest)
+library(ggplot2)
+library(sjPlot) 
+library(mice)
+library(GGally)
+library(plotly)
+library(htmlwidgets)
+library(gtsummary)
+library(gt)
+```
+
+
+```{r}
+# A. Reading in data & cleaning it 
+
+mentalHealth <- read_xpt('/Users/jainishah/Desktop/Final_Project/depression_questionnaire.xpt')
+
+demographics <- read_xpt('/Users/jainishah/Desktop/Final_Project/demoraphics_data.xpt')
+
+# merging the data
+nhanes_data <- merge(mentalHealth, demographics, by = "SEQN")
+
+```
+
+
+
+```{r}
+# A.1 Imputing missing data using MICE
+
+# Remove RIDAGEMN from nhanes_data because it is all NAs
+nhanes_data <- nhanes_data %>% select(-RIDAGEMN)
+
+
+# running multiple imputation to fill in missing values 
+# using predictive mean matching to impute missing values 
+#nhanes_imputed <- mice(nhanes_data, method = "pmm", m = 5)
+
+# extracting all 5 imputed datasets 
+nhanes_imputed.1 <- complete(nhanes_imputed, 1) # using this one 
+nhanes_imputed.2 <- complete(nhanes_imputed, 2)
+nhanes_imputed.3 <- complete(nhanes_imputed, 3)
+nhanes_imputed.4 <- complete(nhanes_imputed, 4)
+nhanes_imputed.5 <- complete(nhanes_imputed, 5)
+
+# Save the imputed dataset as a CSV file
+#write.csv(nhanes_imputed.1, "/Users/jainishah/Desktop/nhanes_imputed_1.csv", row.names = FALSE)
+
+nhanesData <- nhanes_imputed.1 %>%
+  rename(
+    Race_Ethnicity_Code = RIDRETH3,
+    Exam_Month = RIDEXMON,
+    Gender_Code = RIAGENDR,
+    Age_Years = RIDAGEYR,
+    Military_Service_Status = DMQMILIZ,
+    Birthplace_Code = DMDBORN4,
+    Education_Level = DMDEDUC2,
+    Marital_Status = DMDMARTZ,
+    Household_Size = DMDHHSIZ,
+    Income_Level_as_Poverty_Ratio = INDFMPIR
+  )
+
+
+nhanes_cleaned <- nhanesData %>%
+  filter(
+    !Education_Level %in% c(7, 9), 
+    !Marital_Status %in% c(77, 99), 
+    !Birthplace_Code %in% c(77, 99),  
+    !Military_Service_Status %in% c(7, 9)  
+  )
+
+```
+
+```{r}
+# B. Adding weights & setting up survey design object
+
+# for questionnaire data, use interview sample weights: WTINT2YR
+# this setup accounts for NHANES sampling design
+# defining survey design to account for stratification and clustering 
+nhanes_design <- svydesign(
+  id = ~SDMVPSU,      # primary sampling units (geographic regions)
+  strata = ~SDMVSTRA, # stratification variable
+  weights = ~WTINT2YR, # questionnaire weights
+  data = nhanes_data,
+  nest = TRUE
+)
+
+summary(nhanes_design)
+```
+
+
+
+```{r}
+# C. Creating PHQ-9 variable 
+# List of PHQ-9 variables
+phq9_vars <- c("DPQ010", "DPQ020", "DPQ030", "DPQ040", 
+               "DPQ050", "DPQ060", "DPQ070", "DPQ080", "DPQ090")
+
+
+# converting 7 (refused) and 9 (missing) to NA
+nhanes_imputed.1[phq9_vars] <- nhanes_imputed.1[phq9_vars] %>%
+  mutate(across(all_of(phq9_vars), ~ ifelse(. %in% c(7, 9), NA, .)))
+
+# calculating total PHQ-9 score (sum of non-NA values)
+nhanes_imputed.1 <- nhanes_imputed.1 %>%
+  mutate(PHQ9_TOTAL = rowSums(select(., all_of(phq9_vars)), na.rm = TRUE))
+
+# summary of PHQ-9 score
+summary(nhanes_imputed.1$PHQ9_TOTAL)
+
+```
+
+```{r}
+# D. Pearson Correlation Matrix
+# defining an expanded list of SES indicators
+SES_factors <- c("Race_Ethnicity_Code", "Exam_Month", "Gender_Code", "Age_Years", 
+                "Military_Service_Status", "Birthplace_Code", "Education_Level", 
+                "Marital_Status", "Household_Size", "Income_Level_as_Poverty_Ratio", "PHQ9_TOTAL")
+
+# checking if they exist in your dataset before selecting
+SES_factors_existing <- SES_factors[SES_factors %in% colnames(nhanes_cleaned)]
+
+# subsetting data with new SES variables and PHQ-9 total score
+nhanes_subset.1 <- nhanes_cleaned %>%
+  select(all_of(SES_factors_existing), "PHQ9_TOTAL")
+
+# Pearson correlation matrix
+correlation_matrix <- cor(nhanes_subset.1)
+correlation_matrix
+
+```
+
+
+
+```{r}
+# Get correlation values for PHQ9_TOTAL
+cor_with_PHQ9 <- correlation_matrix["PHQ9_TOTAL", ]
+
+# Sort in descending order of absolute correlation
+top_correlated_vars <- sort(abs(cor_with_PHQ9), decreasing = TRUE)
+
+# Print top correlated variables (excluding PHQ9_TOTAL itself)
+top_correlated_vars[-1]  # Remove PHQ9_TOTAL correlation with itself
+
+# Select top 5 correlated variables (excluding PHQ9_TOTAL)
+top_5_vars <- names(top_correlated_vars[-1][1:5])  
+top_5_vars
+```
+
+
+```{r}
+
+SES_factors.1 <- c("Gender_Code",  
+                "Age_Years", "Education_Level", 
+                "Marital_Status", "Income_Level_as_Poverty_Ratio", "PHQ9_TOTAL")
+
+# checking if they exist in your dataset before selecting
+SES_factors_existing <- SES_factors.1[SES_factors.1 %in% colnames(nhanes_cleaned)]
+
+# subsetting data with new SES variables and PHQ-9 total score
+nhanes_subset.2 <- nhanes_cleaned %>%
+  select(all_of(SES_factors_existing), "PHQ9_TOTAL")
+
+# Create the ggpairs plot
+p <- ggpairs(nhanes_subset.2,  
+        title = "Bivariate Associations Between SES Indicators & PHQ-9 Scores",
+        upper = list(continuous = wrap("cor", size = 4, color = "blue")), 
+        lower = list(continuous = wrap("smooth", color = "black", linetype = "dashed", size = 1.5, alpha = 1),
+                     points = list(size = 0.8, alpha = 0.5, color = "red")), # Add trend lines
+        diag = list(continuous = wrap("barDiag", fill = "lightblue")), 
+        columnLabels = c("Gender", "Age", "Education", "Marital Status", "Income Level", "PHQ-9 Total") 
+) +
+theme_bw() + 
+theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5),  
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 14)) 
+
+p
+# Convert to an interactive plot
+#p_interactive <- ggplotly(p)
+
+# Save the interactive plot as an HTML file
+#saveWidget(p_interactive, "ggpairs_plot.html", selfcontained = TRUE)
+
+
+```
+
+
+
+```{r}
+# F. linear mixed-effects model with PSU as a random effect (primary sampling)
+lmm_model <- lmer(PHQ9_TOTAL ~ Gender_Code +  
+                Age_Years + Education_Level + 
+                Marital_Status + Income_Level_as_Poverty_Ratio + (1 | SDMVPSU), 
+                   data = nhanes_cleaned, REML = FALSE)
+summary(lmm_model)
+
+
+tab_model(lmm_model, show.se = TRUE, show.ci = TRUE, show.p = TRUE, digits.p = 4, 
+          dv.labels = "Predictors of PHQ-9 Depression Scores",
+          file = "/Users/jainishah/Desktop/LMM_results.html")  # Saves as an HTML file
+
+
+
+# creating regression table ensuring only 95% CI column
+lm_table <- lmm_model |> 
+  tbl_regression(
+    intercept = TRUE,  
+    estimate_fun = ~style_sigfig(.x, digits = 2),  # Format beta coefficients
+    conf.int = TRUE,  # Ensure CI is included
+    ci_fun = function(x) paste0("[", style_sigfig(x[[1]], digits = 2), ", ", style_sigfig(x[[2]], digits = 2), "]")  # Format CI properly
+  ) |> 
+  modify_header(
+    estimate = "**Beta**",
+    ci = "**95% CI**",
+    p.value = "**p-value**"
+  ) |> 
+  modify_column_hide(columns = c(std.error, statistic, conf.low, conf.high))  # Hide extra CI columns
+
+lm_table
+
+# Save as HTML
+gtsave(as_gt(lm_table), "/Users/jainishah/Desktop/Regression_Table.html")
+
+```
+
+```{r}
+library(ggplot2)
+library(broom.mixed)
+
+fixed_effects <- tidy(lmm_model, effects = "fixed")
+
+# plotting coefficients with confidence intervals
+p.1 <- ggplot(fixed_effects, aes(x = estimate, y = term)) +
+  geom_point(color = "blue", size = 3) +
+  geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, 
+                     xmax = estimate + 1.96 * std.error), 
+                 height = 0.2, color = "black") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Effect of SES Factors on PHQ-9 Scores",
+       x = "Estimated Effect (Coefficient)", y = "Predictor") +
+  theme_minimal()
+p.1
+
+# converting ggplot to interactive plotly
+p_interactive <- ggplotly(p.1)
+
+# saving as an interactive HTML file
+saveWidget(p_interactive, file = "/Users/jainishah/Desktop/PHQ9_Coefficients.html", selfcontained = TRUE)
+```
+
+```{r}
+# Load necessary package
+library(Hmisc)
+library(table1)
+
+df <- nhanes_imputed.1
+# Convert RIDRETH3 to a factor with appropriate labels
+df$RIDRETH3 <- factor(df$RIDRETH3, 
+                      levels = c(1, 2, 3, 4, 6, 7), 
+                      labels = c("Mexican American", 
+                                 "Other Hispanic", 
+                                 "Non-Hispanic White", 
+                                 "Non-Hispanic Black", 
+                                 "Non-Hispanic Asian", 
+                                 "Other Race - Including Multi-Racial"))
+# Convert RIAGENDR to a factor with proper labels
+df$RIAGENDR <- factor(df$RIAGENDR, 
+                      levels = c(1, 2), 
+                      labels = c("Male", "Female"))
+# Convert DMQMILIZ to a factor with appropriate labels
+df$DMQMILIZ <- factor(df$DMQMILIZ, 
+                      levels = c(1, 2, 7, 9), 
+                      labels = c("Yes", "No", "Refused", "Don't know"))
+
+# Explicitly mark missing values
+df$DMQMILIZ[is.na(df$DMQMILIZ)] <- "Missing"
+
+# Convert DMDBORN4 to a factor with appropriate labels
+df$DMDBORN4 <- factor(df$DMDBORN4, 
+                      levels = c(1, 2, 77, 99), 
+                      labels = c("Born in 50 US states or Washington, D.C.",
+                                 "Others",
+                                 "Refused",
+                                 "Don't know"))
+
+# Explicitly mark missing values
+df$DMDBORN4[is.na(df$DMDBORN4)] <- "Missing"
+
+# Convert DMDEDUC2 to a factor with appropriate labels
+df$DMDEDUC2 <- factor(df$DMDEDUC2, 
+                      levels = c(1, 2, 3, 4, 5, 7, 9), 
+                      labels = c("Less than 9th grade",
+                                 "9-11th grade (Includes 12th grade with no diploma)",
+                                 "High school graduate/GED or equivalent",
+                                 "Some college or AA degree",
+                                 "College graduate or above",
+                                 "Refused",
+                                 "Don't know"))
+
+# Explicitly mark missing values
+df$DMDEDUC2[is.na(df$DMDEDUC2)] <- "Missing"
+
+# Convert INDFMPIR to a factor with appropriate labels
+df$INDFMPIR_Factor <- cut(df$INDFMPIR, 
+                          breaks = c(-Inf, 4.99, Inf), 
+                          labels = c("0 to 4.99", "5 or more"), 
+                          right = FALSE)
+
+# Explicitly mark missing values
+df$INDFMPIR_Factor[is.na(df$INDFMPIR)] <- "Missing"
+
+# Convert to a factor with specified levels for consistency
+df$INDFMPIR_Factor <- factor(df$INDFMPIR_Factor, 
+                             levels = c("0 to 4.99", "5 or more", "Missing"))
+
+# Convert DMDMARTZ to a factor with appropriate labels
+df$DMDMARTZ <- factor(df$DMDMARTZ, 
+                      levels = c(1, 2, 3, 77, 99), 
+                      labels = c("Married/Living with partner", 
+                                 "Widowed/Divorced/Separated", 
+                                 "Never married", 
+                                 "Refused", 
+                                 "Don't know"))
+
+# Explicitly mark missing values
+df$DMDMARTZ[is.na(df$DMDMARTZ)] <- "Missing"
+
+# Convert to a factor with specified levels for consistency
+df$DMDMARTZ <- factor(df$DMDMARTZ, 
+                      levels = c("Married/Living with partner", 
+                                 "Widowed/Divorced/Separated", 
+                                 "Never married", 
+                                 "Refused", 
+                                 "Don't know", 
+                                 "Missing"))
+# Convert DMDHHSIZ to a factor with appropriate labels
+df$DMDHHSIZ_Factor <- cut(df$DMDHHSIZ, 
+                          breaks = c(-Inf, 2, 4, 6, Inf), 
+                          labels = c("1-2", "3-4", "5-6", "7 or more"), 
+                          right = TRUE) 
+
+# Explicitly mark missing values (though missing count is 0 in this case)
+df$DMDHHSIZ_Factor[is.na(df$DMDHHSIZ)] <- "Missing"
+
+# Convert to a factor with specified levels for consistency
+df$DMDHHSIZ_Factor <- factor(df$DMDHHSIZ_Factor, 
+                             levels = c("1-2", "3-4", "5-6", "7 or more", "Missing"))
+
+# Convert DPQ100 to a factor with appropriate labels (modifying in place)
+df$DPQ100 <- factor(df$DPQ100, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all difficult", 
+                               "Somewhat difficult", 
+                               "Very difficult", 
+                               "Extremely difficult", 
+                               "Refused", 
+                               "Don't know"))
+
+# Explicitly mark missing values
+df$DPQ100[is.na(df$DPQ100)] <- "Missing"
+
+# Ensure factor levels include "Missing" for consistency
+df$DPQ100 <- factor(df$DPQ100, 
+                    levels = c("Not at all difficult", 
+                               "Somewhat difficult", 
+                               "Very difficult", 
+                               "Extremely difficult", 
+                               "Refused", 
+                               "Don't know", 
+                               "Missing"))
+
+# DPQ010 - Nervous Feelings
+df$DPQ010 <- factor(df$DPQ010, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ010[is.na(df$DPQ010)] <- "Missing"
+df$DPQ010 <- factor(df$DPQ010, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ020 - Hopelessness
+df$DPQ020 <- factor(df$DPQ020, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ020[is.na(df$DPQ020)] <- "Missing"
+df$DPQ020 <- factor(df$DPQ020, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ030 - Interest Loss
+df$DPQ030 <- factor(df$DPQ030, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ030[is.na(df$DPQ030)] <- "Missing"
+df$DPQ030 <- factor(df$DPQ030, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ040 - Sleep Difficulties
+df$DPQ040 <- factor(df$DPQ040, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ040[is.na(df$DPQ040)] <- "Missing"
+df$DPQ040 <- factor(df$DPQ040, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ050 - Energy Loss
+df$DPQ050 <- factor(df$DPQ050, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ050[is.na(df$DPQ050)] <- "Missing"
+df$DPQ050 <- factor(df$DPQ050, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ060 - Appetite Changes
+df$DPQ060 <- factor(df$DPQ060, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ060[is.na(df$DPQ060)] <- "Missing"
+df$DPQ060 <- factor(df$DPQ060, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ070 - Feeling Successful
+df$DPQ070 <- factor(df$DPQ070, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ070[is.na(df$DPQ070)] <- "Missing"
+df$DPQ070 <- factor(df$DPQ070, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ080 - Thoughts of Better Death
+df$DPQ080 <- factor(df$DPQ080, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ080[is.na(df$DPQ080)] <- "Missing"
+df$DPQ080 <- factor(df$DPQ080, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+# DPQ090 - Concerns About Suicide
+df$DPQ090 <- factor(df$DPQ090, 
+                    levels = c(0, 1, 2, 3, 7, 9), 
+                    labels = c("Not at all", 
+                               "Several days", 
+                               "More than half the days", 
+                               "Nearly every day", 
+                               "Refused", 
+                               "Don't know"))
+df$DPQ090[is.na(df$DPQ090)] <- "Missing"
+df$DPQ090 <- factor(df$DPQ090, levels = c("Not at all", "Several days", "More than half the days", 
+                                          "Nearly every day", "Refused", "Don't know", "Missing"))
+
+
+
+
+#Dropping Others in the dataframe
+df$RIDRETH1 <- NULL
+df$RIDEXMON <- NULL
+df$SDDSRVYR <- NULL
+df$RIDSTATR <- NULL
+df$RIDEXAGM <- NULL
+df$DMDYRUSR <- NULL
+df$RIDEXPRG <- NULL
+df$DMDHRGND <- NULL
+df$DMDHRAGZ <- NULL
+df$DMDHREDZ <- NULL
+df$DMDHRMAZ <- NULL
+df$DMDHSEDZ <- NULL
+df$WTINT2YR <- NULL
+df$WTMEC2YR <- NULL
+df$SDMVSTRA <- NULL
+df$SDMVPSU <- NULL
+df$INDFMPI <- NULL
+df$INDFMPIR <- NULL
+df$DMDHHSIZ <- NULL
+df$SEQN <- NULL
+
+# Assign more intuitive variable names
+label(df$SEQN) <- "Participant Sequence Number"
+label(df$RIDRETH3) <- "Race/Ethnicity Code"
+label(df$RIAGENDR) <- "Gender Code"
+label(df$RIDAGEYR) <- "Age (Years)"
+label(df$DMQMILIZ) <- "Military Service Status"
+label(df$DMDBORN4) <- "Birthplace Code"
+label(df$DMDEDUC2) <- "Education Level"
+label(df$DMDMARTZ) <- "Marital Status"
+label(df$DMDHHSIZ_Factor) <- "Household Size"
+label(df$INDFMPIR_Factor) <- "Income Level (Poverty Ratio)"
+label(df$DPQ010) <- "Nervous Feelings*"
+label(df$DPQ020) <- "Hopelessness*"
+label(df$DPQ030) <- "Interest Loss*"
+label(df$DPQ040) <- "Sleep Difficulties*"
+label(df$DPQ050) <- "Energy Loss*"
+label(df$DPQ060) <- "Appetite Changes*"
+label(df$DPQ070) <- "Feeling Successful*"
+label(df$DPQ080) <- "Thoughts of Better Death*"
+label(df$DPQ090) <- "Concerns About Suicide*"
+label(df$DPQ100) <- "Difficulty these problems have caused"
+label(df$PHQ9_TOTAL) <- "Total PHQ-9 Score"
+
+# Specify variable order
+table1(~ DPQ010 + DPQ020 + DPQ030 + DPQ040 + DPQ050 + DPQ060 + DPQ070 + DPQ080 + DPQ090 + 
+         DPQ100 + PHQ9_TOTAL + RIDRETH3 + RIAGENDR + RIDAGEYR + DMQMILIZ + DMDBORN4 + DMDEDUC2 + 
+         DMDMARTZ + DMDHHSIZ_Factor + INDFMPIR_Factor, 
+       data = df,
+       footnote = "Summary of key variables; * Indicates that the question was asked, 'Over the last 2 weeks, how often have you...'",
+       topclass = "Rtable1-zebra Rtable1-shade")
+
+```
+
