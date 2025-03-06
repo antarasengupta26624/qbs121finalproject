@@ -246,8 +246,6 @@ This analysis expands on the previous logistic regression to explore the impact 
   
 <iframe src="assets/race_logreg.html" width=800 height=600 frameBorder=0></iframe>
 <iframe src="assets/immigration_logreg2.html" width=800 height=600 frameBorder=0></iframe>
-<iframe src="assets/immigrantOR.html" width=800 height=600 frameBorder=0></iframe>
-
 
 ## V. Conclusion
 This analysis highlights how a myriad of socioeconomic disparities affect mental health, particularly concerning depression. Using the NHANES dataset, our findings align with existing literature, reinforcing the idea that individuals with lower socioeconomic status (SES) experience are more likely to suffer from depression.
