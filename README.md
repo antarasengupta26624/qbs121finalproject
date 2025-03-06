@@ -231,17 +231,18 @@ This analysis expands on the previous logistic regression to explore the impact 
 - Logistic regression estimates the odds of being in the higher-depression category based on these factors while controlling for demographic and socioeconomic variables.
 - Odds ratios (OR) provide an interpretable measure of relative risk across predictor variables.
 
-2. Model Summary  
+2. Model Summary
+
 **Ethnicity/Race:**  
 - Compared to the reference group (Asian), none of the ethnicity groups (Black, Hispanic, Other, or White) showed a statistically significant association with higher PHQ-9 scores (all p > 0.05).  
 - The lack of significance suggests that, when adjusting for other demographic and socioeconomic factors, ethnicity/race alone does not strongly predict higher depression scores in this sample.
 
 **Years in the U.S.:**  
-*20 or more years in the U.S.:* This group had the highest odds of depressive symptoms (OR = 1.71, 95% CI: 0.94 – 3.14), approaching statistical significance (p = 0.08). This trend suggests that longer residency in the U.S. may be associated with a higher risk of depression.
+- *20 or more years in the U.S.:* This group had the highest odds of depressive symptoms (OR = 1.71, 95% CI: 0.94 – 3.14), approaching statistical significance (p = 0.08). This trend suggests that longer residency in the U.S. may be associated with a higher risk of depression.
 
 #### 3. Conclusions  
 - Ethnicity alone is not a strong predictor of depression risk when controlling for socioeconomic and demographic factors. Other studies have acknowledged how the impact of race/ethnicity was unclear in the past. However, recent studies have shown evidence for an association between race and depression. [6]
-- **Longer residency in the U.S. appears to be associated with a higher likelihood of depressive symptoms,** with those in the country for 20+ years facing the highest risk. Previous studies have also confirmed this, calling for a focus on preventative care through "community-based" care. [7]
+- Longer residency in the U.S. appears to be associated with a higher likelihood of depressive symptoms, with those in the country for 20+ years facing the highest risk. Previous studies have also confirmed this, calling for a focus on preventative care through "community-based" care. [7]
   
 <iframe src="assets/race_logreg.html" width="100%" height="500px"></iframe>
 <iframe src="assets/immigration_logreg2.html" width="100%" height="500px"></iframe>
