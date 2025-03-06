@@ -124,6 +124,7 @@ This pyramid population plot displays the distribution of depression severity le
 Visualizing depression distribution across age groups allows for a clearer understanding of how depression prevalence changes with age. It helps identify trends in mental health across different life stages and highlights potentially vulnerable age groups that may require targeted interventions.
 
 - **Conclusions**
+The chart suggests that younger age groups have a higher percentage of individuals with high depression, while older age groups exhibit a greater proportion of low depression cases. This trend aligns with existing literature indicating that older adults may have lower depressive symptoms due to factors such as emotional resilience, life experience, or improved coping mechanisms. 
 
 2. *3-D Scatterplot*
 <iframe src="assets/cube.html" width=800 height=600 frameBorder=0></iframe>
